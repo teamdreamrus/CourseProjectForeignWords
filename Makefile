@@ -1,2 +1,2 @@
-main:main.c
-	gcc -Wall -o main main.c
+main:StartMenu.c
+	gcc -Wall -o main StartMenu.c
