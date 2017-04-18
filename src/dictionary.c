@@ -1,34 +1,20 @@
-#include <stdio.h>
-#include <sys/types.h>
 #include <dirent.h>
-#include <err.h>
-#include <stdlib.h>
-#include <errno.h>
+#include <stdio.h>
 
-int main(int argc, char* argv[])
-{
-DIR* dir;
-struct dirent* de;
+int ListDic (void) {
+DIR *dir;
+struct dirent *ent;
 
-if(argc == 1)
-errx(1, "Expected directory name\nUsage: %s DIRECTORY", *argv);
+char directory[255] = "./dictionary/";
+dir = opendir(directory);
 
-else if(argc > 2)
-errx(1, "Extra arguments were specified\nUsage: %s DIRECTORY", *argv);
+while ((ent=readdir(dir)) != 0) 
+printf("%s\n", ent->d_name);
 
-if((dir = opendir(argv[1])) == NULL)
-err(1, "opendir: `%s'", argv[1]);
-
-printf("Printing contents of directory `%s'.\n", argv[1]);
-
-while((de = readdir(dir)) != NULL)
-printf("%s\n", de->d_name);
-
-if(errno == EBADF)
-err(1, "readdir: `%s'", argv[1]);
-
-if(closedir(dir) == -1)
-err(1, "closedir: `%s'", argv[1]);
-
-exit(0);
+closedir(dir);
+return 0;
 }
+
+
+
+
